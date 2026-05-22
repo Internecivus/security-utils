@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="warn" strict="true" name="TestConfig" packages="">
+    <Properties>
+        <Property name="fileName">target/logs/current.log</Property>
+        <Property name="filePattern">target/logs/%d{yyyy-MM}/log-%d{yyyy-MM-dd}-#%i.log.gz</Property>
+    </Properties>
+
+    <Appenders>
+        <Appender type="Console" name="STDOUT">
+            <Layout type="PatternLayout">
+                <Pattern>%d %p [%C{1.}] (%t) %encode{%m} %n</Pattern>
+            </Layout>
+        </Appender>
+
+        <RollingFile name="FILE" fileName="${fileName}" filePattern="${filePattern}">
+            <PatternLayout>
+                <Pattern>%d %p [%C{1.}] (%t) %m%n</Pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" />
+                <SizeBasedTriggeringPolicy size="50 MB" />
+            </Policies>
+            <DefaultRolloverStrategy max="20"/>
+        </RollingFile>
+    </Appenders>
+    <Loggers>
+        <Root level="trace">
+            <AppenderRef ref="STDOUT" />
+            <AppenderRef ref="FILE" />
+        </Root>
+    </Loggers>
+</Configuration>
